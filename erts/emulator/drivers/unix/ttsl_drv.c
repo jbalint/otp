@@ -1142,8 +1142,7 @@ static int start_termcap(void)
     if (!(left = tgetflag("bs") ? "\b" : tgetstr("bc", &c)))
       left = "\b";		/* Can't happen - but does on Solaris 2 */
     right = tgetstr("nd", &c);
-    if (up && down && left && right)
-      return TRUE;
+	return TRUE;
  false:
     if (env && env != capbuf)
 	driver_free(env);
@@ -1162,28 +1161,28 @@ static int stop_termcap(void)
 
 static int move_left(int n)
 {
-    while (n-- > 0)
+    while (left && n-- > 0)
       tputs(left, 1, outc);
     return TRUE;
 }
 
 static int move_right(int n)
 {
-    while (n-- > 0)
-      tputs(right, 1, outc);
+	while (right && n-- > 0)
+		tputs(right, 1, outc);
     return TRUE;
 }
 
 static int move_up(int n)
 {
-    while (n-- > 0)
+    while (up && n-- > 0)
       tputs(up, 1, outc);
     return TRUE;
 }
 
 static int move_down(int n)
 {
-    while (n-- > 0)
+    while (down && n-- > 0)
       tputs(down, 1, outc);
     return TRUE;
 }
